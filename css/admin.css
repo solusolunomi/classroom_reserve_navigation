@@ -1,0 +1,418 @@
+/* css/admin.css */
+
+.admin-flash{
+  margin: 10px 0 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid #e6ebf2;
+  background: #ffffff;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.admin-tabs{
+  display: flex;
+  gap: 10px;
+  margin: 10px 0 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.admin-tab{
+  text-decoration: none;
+  border: 1px solid #e6ebf2;
+  background: #fff;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-weight: 900;
+  color: #0f172a;
+  transition: background .15s ease, box-shadow .15s ease, transform .12s ease;
+}
+
+.admin-tab:hover{
+  background: #f7f9fc;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.10);
+  transform: translateY(-1px);
+}
+
+.admin-tab.is-active{
+  border-color: rgba(96,125,139,0.45);
+  box-shadow: 0 0 0 2px rgba(96,125,139,0.14) inset;
+}
+
+.admin-table-wrap{
+  overflow: auto;
+  border-radius: 12px;
+  border: 1px solid #e6ebf2;
+}
+
+.admin-table{
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  min-width: 820px;
+}
+
+.admin-table th,
+.admin-table td{
+  padding: 10px 10px;
+  border-bottom: 1px solid #eef2f7;
+  text-align: left;
+  vertical-align: middle;
+  font-weight: 800;
+  color: #0f172a;
+  white-space: nowrap;
+}
+
+.admin-table thead th{
+  background: #f8fafc;
+  font-weight: 900;
+}
+
+.admin-actions{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.admin-grid{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 980px){
+  .admin-grid{ grid-template-columns: 1fr; }
+}
+
+.admin-panel{
+  border: 1px solid #e6ebf2;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fff;
+}
+
+.admin-panel__title{
+  font-weight: 900;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.admin-list{
+  display: grid;
+  gap: 10px;
+}
+
+.admin-list__item{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #eef2f7;
+  border-radius: 12px;
+  padding: 10px;
+  background: #fff;
+  flex-wrap: wrap;
+}
+
+.admin-inline{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.admin-input{
+  padding: 9px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(207,216,220,.95);
+  font-weight: 800;
+  min-width: 160px;
+}
+
+.admin-input--mini{
+  min-width: 90px;
+  width: 90px;
+}
+
+.admin-badge{
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  font-size: 12px;
+  font-weight: 900;
+  color: #334155;
+}
+
+.admin-badge.is-on{
+  border-color: rgba(59,130,246,.35);
+  background: rgba(59,130,246,.10);
+  color: #1d4ed8;
+}
+
+.admin-reset{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* =========================
+   admin：フッターは常に表示、スクロールは一覧だけ
+========================= */
+
+/* ページ自体はスクロールさせない（フッター見えるように） */
+body.admin-page {
+  min-height: 100vh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ヘッダーは通常通り（上固定ではない想定） */
+body.admin-page .app-header{
+  flex: 0 0 auto;
+}
+
+/* mainは残り高さを使う */
+body.admin-page .page{
+  flex: 1 1 auto;
+  overflow: hidden; /* main自体はスクロールさせない */
+}
+
+/* フッターは下に固定表示（画面内） */
+body.admin-page .app-footer{
+  flex: 0 0 auto;
+}
+
+/* 「教室を編集」の一覧だけスクロール */
+body.admin-page .admin-list{
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 6px;
+  max-height: calc(100vh - 72px - 48px - 220px);
+}
+
+
+/* 見た目（任意） */
+body.admin-page .admin-list::-webkit-scrollbar {
+  width: 10px;
+}
+body.admin-page .admin-list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+body.admin-page .admin-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* =========================================================
+   管理画面：タブ切替で横幅が変わらないように固定（確実に効かせる版）
+   ※ style.css の .page/.card に負けないように admin-page で限定 + !important
+========================================================= */
+body.admin-page .page{
+  max-width: 980px !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  padding-left: 16px;
+  padding-right: 16px;
+  box-sizing: border-box;
+}
+
+/* card自体は常に同じ横幅に（予約↔教室で揺れない） */
+body.admin-page .card{
+  width: 100% !important;
+  max-width: 980px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  box-sizing: border-box;
+}
+
+/* 教室タブ内のグリッドが横に暴れないように */
+body.admin-page .admin-grid{
+  width: 100% !important;
+  max-width: 100% !important;
+}
+/* =========================================================
+   教室編集：保存/削除を横並び + 階数入力を細く
+========================================================= */
+
+/* 1アイテム内のフォーム2つを横並びにする */
+body.admin-page .admin-list__item{
+  flex-wrap: nowrap;          /* まずは横並び優先 */
+  align-items: center;
+}
+
+/* 更新フォームは横並び維持 */
+body.admin-page .admin-list__item .admin-inline{
+  flex-wrap: nowrap;
+  gap: 10px;
+  flex: 1 1 auto;
+  min-width: 0;               /* 入力がはみ出すの防止 */
+}
+
+/* 教室名入力：伸びる */
+body.admin-page .admin-list__item .admin-inline .admin-input{
+  flex: 1 1 auto;
+  min-width: 180px;
+}
+
+/* 階数入力：細く固定 */
+body.admin-page .admin-list__item .admin-inline .admin-input--mini{
+  width: 64px !important;
+  min-width: 64px !important;
+}
+
+/* 保存ボタン：折り返さない */
+body.admin-page .admin-list__item .admin-inline .reserve-btn{
+  white-space: nowrap;
+}
+
+/* 削除フォーム：右に寄せて横並び */
+body.admin-page .admin-list__item > form:not(.admin-inline){
+  margin-left: 10px;
+  flex: 0 0 auto;
+}
+
+/* 狭い画面のときだけ折り返し許可（スマホ対策） */
+@media (max-width: 640px){
+  body.admin-page .admin-list__item{
+    flex-wrap: wrap;
+  }
+  body.admin-page .admin-list__item .admin-inline{
+    flex-wrap: wrap;
+  }
+  body.admin-page .admin-list__item > form:not(.admin-inline){
+    margin-left: 0;
+  }
+}
+/* =========================================================
+   教室編集：横スクロール完全除去 + 階数さらに細く
+========================================================= */
+
+/* 横スクロールを絶対に出さない */
+body.admin-page .admin-panel{
+  overflow-x: hidden;
+}
+
+body.admin-page .admin-list{
+  overflow-x: hidden;
+}
+
+/* 1行レイアウト調整 */
+body.admin-page .admin-list__item{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: nowrap;
+  overflow: hidden;        /* ←これで横スクロール消す */
+}
+
+/* 更新フォーム横並び */
+body.admin-page .admin-inline{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* 教室名：可変 */
+body.admin-page .admin-inline .admin-input{
+  flex: 1 1 auto;
+  min-width: 120px;
+}
+
+/* 階数：さらに細く */
+body.admin-page .admin-inline .admin-input--mini{
+  width: 48px !important;
+  min-width: 48px !important;
+  text-align: center;
+}
+
+/* ボタン幅を固定して暴れ防止 */
+body.admin-page .admin-inline .reserve-btn,
+body.admin-page .admin-list__item > form .danger-btn{
+  padding: 7px 10px;
+  white-space: nowrap;
+  flex: 0 0 auto;
+}
+
+/* 削除フォームも横並び */
+body.admin-page .admin-list__item > form:not(.admin-inline){
+  flex: 0 0 auto;
+}
+/* =========================
+   admin：mainの縦幅を画面内に収める（見た目を落ち着かせる）
+========================= */
+
+/* ヘッダーとフッター分を除いた高さに main を固定 */
+body.admin-page .page{
+  height: calc(100vh - 72px - 48px);
+  overflow: hidden;
+}
+
+/* 教室タブ：右側の編集一覧だけスクロール */
+body.admin-page .admin-list{
+  max-height: calc(100vh - 72px - 48px - 240px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 6px;
+}
+
+/* 予約タブ：テーブルが長い時だけ中をスクロール */
+body.admin-page .admin-table-wrap{
+  max-height: calc(100vh - 72px - 48px - 240px);
+  overflow: auto;
+}
+
+/* =========================================================
+   CSVインポートUI（管理/一般 共通）
+========================================================= */
+.admin-resv-tools{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 10px 0 12px;
+}
+
+.admin-import-box{
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 12px;
+  align-items: start;
+}
+
+@media (max-width: 980px){
+  .admin-import-box{ grid-template-columns: 1fr; }
+}
+
+.admin-import-help{
+  border: 1px solid #eef2f7;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fff;
+}
+
+.admin-import-form{
+  border: 1px solid #eef2f7;
+  border-radius: 12px;
+  padding: 12px;
+  background: #fff;
+}
+
+.admin-import-log{
+  margin-top: 10px;
+  border: 1px solid #eef2f7;
+  border-radius: 12px;
+  padding: 10px;
+  background: #f8fafc;
+  color: #0f172a;
+  font-weight: 800;
+}
